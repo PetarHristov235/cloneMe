@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 import com.example.demo.entity.FoodEntity;
 import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface FoodRepository extends CrudRepository<FoodEntity, Long> {
+public interface FoodRepository extends JpaRepository<FoodEntity, Long> {
 
     @Query(value = """
             select * from public.food
@@ -21,7 +22,7 @@ public interface FoodRepository extends CrudRepository<FoodEntity, Long> {
     @Transactional
     @Query(value = """
              update public.food 
-                 ``    set price = :price 
+                     set price = :price 
                      where id = :id
             """, nativeQuery = true)
     void updateFoodPriceById(@Param("price") BigDecimal price, @Param("id") Long id);
